@@ -1,0 +1,97 @@
+package springmvc.webnews.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import springmvc.webnews.converter.UserConverter;
+import springmvc.webnews.dto.UserDTO;
+import springmvc.webnews.entity.RoleEntity;
+import springmvc.webnews.entity.UserEntity;
+import springmvc.webnews.repository.RoleRepository;
+import springmvc.webnews.repository.UserRepository;
+import springmvc.webnews.service.IUserService;
+
+@Service
+public class UserService implements IUserService{
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private UserConverter userConverter;
+	
+	@Autowired
+	private RoleRepository roleRepository;
+
+	@Override
+	public List<UserDTO> findAll(Pageable pageable) {
+		List<UserDTO> models = new ArrayList<>();
+		List<UserEntity> entities = userRepository.findAll(pageable).getContent();
+		for(UserEntity item : entities) {
+			UserDTO userDTO = userConverter.toDto(item);
+			models.add(userDTO);
+		}
+		return models;
+	}
+
+	@Override
+	public int getTotalItem() {
+		return (int) userRepository.count();
+	}
+
+	@Override
+	public UserDTO findById(long id) {
+		UserEntity entity = userRepository.findOne(id);
+		return userConverter.toDto(entity);
+	}
+
+	@Override
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	@Override
+	@Transactional
+	public UserDTO insert(UserDTO userDTO) {
+		RoleEntity role = roleRepository.findOneByCode(userDTO.getRoleCode());
+		String encryptedPassword = passwordEncoder().encode(userDTO.getPassword());
+		UserEntity check = userRepository.findOneByUserName(userDTO.getUserName());
+		if(check != null) {
+			return null;
+		}
+		UserEntity userEntity = userConverter.toEntity(userDTO);
+		userEntity.setPassword(encryptedPassword);
+		userEntity.setRole(role);
+		return userConverter.toDto(userRepository.save(userEntity));
+	}
+
+	@Override
+	@Transactional
+	public UserDTO update(UserDTO updateUser) {
+		UserEntity oldUser = userRepository.findOne(updateUser.getId());
+		RoleEntity role = roleRepository.findOneByCode(updateUser.getRoleCode());
+		String encryptedPassword = passwordEncoder().encode(updateUser.getPassword());
+		UserEntity userEntity = userConverter.toEntity(oldUser, updateUser);
+		oldUser.setRole(role);
+		oldUser.setPassword(encryptedPassword);
+		return userConverter.toDto(userRepository.save(userEntity));
+	}
+
+	@Override
+	public void delete(long[] ids) {
+		for(long item : ids) {
+			userRepository.delete(item);
+		}
+		
+	}
+	
+	
+}	

@@ -1,0 +1,6 @@
+package springmvc.webnews.controller.admin;
+
+@Controller(value = "categoryControllerOfAdmin")
+public class CategoryController {
+
+}

@@ -1,0 +1,12 @@
+package springmvc.webnews.service;
+
+public interface IUserService {
+	
+	List<UserDTO> findAll(Pageable pageable);
+	int getTotalItem();
+	UserDTO findById(long id);
+	PasswordEncoder passwordEncoder();
+	UserDTO insert(UserDTO userDTO);
+	UserDTO update(UserDTO updateUser);
+	void delete(long[] ids);
+}

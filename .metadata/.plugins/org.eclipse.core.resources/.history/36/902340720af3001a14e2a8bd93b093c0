@@ -1,0 +1,5 @@
+package springmvc.webnews.controller;
+
+public class HomeController {
+
+}

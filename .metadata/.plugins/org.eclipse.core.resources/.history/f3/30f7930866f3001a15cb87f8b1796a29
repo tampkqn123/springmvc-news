@@ -1,0 +1,41 @@
+package springmvc.webnews.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import springmvc.webnews.converter.NewConverter;
+import springmvc.webnews.dto.NewDTO;
+import springmvc.webnews.entity.NewEntity;
+import springmvc.webnews.repository.NewRepository;
+import springmvc.webnews.service.INewService;
+
+@Service
+public class NewService implements INewService{
+	
+	@Autowired
+	private NewRepository newRepository;
+	
+	@Autowired
+	private NewConverter newConverter;
+
+	@Override
+	public List<NewDTO> findAll(Pageable pageble) {
+		List<NewDTO> models = new ArrayList<>();
+		List<NewEntity> entities = newRepository.findAll(pageble).getContent();
+		for(NewEntity items : entities) {
+			NewDTO newDTO = newConverter.toDto(items);
+			models.add(newDTO);
+		}
+		return models;
+	}
+
+	@Override
+	public int getTotalItem() {
+		return (int) newRepository.count();
+	}
+
+}

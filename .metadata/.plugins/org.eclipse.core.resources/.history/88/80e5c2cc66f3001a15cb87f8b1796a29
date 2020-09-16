@@ -1,0 +1,120 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ADMIN HOME</title>
+</head>
+<body>
+	<div id="layoutSidenav">
+		<div id="layoutSidenav_nav">
+			<nav class="sb-sidenav accordion sb-sidenav-dark"
+				id="sidenavAccordion">
+				<div class="sb-sidenav-menu">
+					<div class="nav">
+						<h3><div class="sb-sidenav-menu-heading">Quản lý</div></h3>
+						<a class="nav-link collapsed" href="#">
+							Người dùng
+						</a>
+						<a class="nav-link collapsed" href="<c:url value='/quan-tri/bai-viet/danh-sach?page=1&limit=5'/>">
+							Bài viết
+						</a>
+						<a class="nav-link collapsed" href="#">
+							Danh mục
+						</a>
+						
+					</div>
+					
+				</div>
+				<div class="sb-sidenav-footer">
+					<div class="small">Logged in as:</div>
+					Start Bootstrap
+				</div>
+			</nav>
+		</div>
+		<div id="layoutSidenav_content">
+			<main>
+				<form action="<c:url value='/quan-tri/bai-viet/danh-sach'/>" id="formSubmit" method="get">
+				<div class="container-fluid">
+					<div class="card mb-4">
+						<div class="card-header">
+							<i class="fas fa-table mr-1"></i> DataTable Example
+						</div>
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-bordered" id="dataTable" width="100%"
+									cellspacing="0">
+									<thead>
+									<tr>
+										<th><input type="checkbox" id="checkAll"></th>
+										<th>Tên bài viết</th>
+										<th>Mô tả ngắn</th>
+										<th>Thao tác</th>
+									</tr>
+									</thead>
+
+									<tbody>
+									<c:forEach var="item" items="${model.listResult}">
+									</c:forEach>
+									<tr>
+										<td><input type="checkbox" id="checkbox_${item.id}" value="${item.id}"></td>
+										<td>${item.title}</td>
+										<td>${item.shortDescription}</td>
+										<td>
+											<c:url var="updateNewURL" value="/quan-tri/bai-viet/chinh-sua">
+													<c:param name="id" value="${item.id}"/>															
+											</c:url>																
+											<a class="btn btn-sm btn-primary btn-edit" data-toggle="tooltip"
+													title="Cập nhật bài viết" href='${updateNewURL}'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+											</a>
+										</td>
+									</tr>
+								</tbody>
+								</table>
+									<ul class="pagination" id="pagination"></ul>	
+									<input type="hidden" value="" id="page" name="page"/>
+									<input type="hidden" value="" id="limit" name="limit"/>	
+							</div>
+						</div>
+					</div>
+				</div>
+				</form>
+			</main>
+			<footer class="py-4 bg-light mt-auto">
+				<div class="container-fluid">
+					<div
+						class="d-flex align-items-center justify-content-between small">
+						<div class="text-muted">Copyright &copy; Your Website 2020</div>
+						<div>
+							<a href="#">Privacy Policy</a> &middot; <a href="#">Terms
+								&amp; Conditions</a>
+						</div>
+					</div>
+				</div>
+			</footer>
+
+		</div>
+	</div>
+	
+	<script>
+		var totalPages = ${model.totalPage};
+		var currentPage = ${model.page};
+		$(function () {
+	        window.pagObj = $('#pagination').twbsPagination({
+	            totalPages: totalPages,
+	            visiblePages: 10,
+	            startPage: currentPage,
+	            onPageClick: function (event, page) {
+	            	if (currentPage != page) {
+	            		$('#limit').val(2);
+						$('#page').val(page);
+						$('#formSubmit').submit();
+					}
+	            }
+	        });
+	    });
+	
+	</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+package springmvc.webnews.config;
+
+public class JpaAuditingConfig {
+
+}

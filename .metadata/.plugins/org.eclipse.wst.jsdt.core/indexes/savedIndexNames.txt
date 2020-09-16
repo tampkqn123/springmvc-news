@@ -1,0 +1,10 @@
+INDEX VERSION 1.4+C:\Users\TechCare\Desktop\web-news-springmvc\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+3820126857.index
+2228742552.index
+1288757315.index
+1516175435.index
+1149159682.index
+3150568646.index
+3604511278.index
+2628724054.index
+1375871462.index

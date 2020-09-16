@@ -1,0 +1,96 @@
+package springmvc.webnews.service.impl;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import springmvc.webnews.converter.CategoryConverter;
+import springmvc.webnews.dto.CategoryDTO;
+import springmvc.webnews.entity.CategoryEntity;
+import springmvc.webnews.entity.NewEntity;
+import springmvc.webnews.repository.CategoryRepository;
+import springmvc.webnews.repository.NewRepository;
+import springmvc.webnews.service.ICategoryService;
+
+@Service
+public class CategoryService implements ICategoryService{
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	private CategoryConverter categoryConverter;
+	
+	@Autowired
+	private NewRepository newRepository;
+	
+
+	@Override
+	public Map<String, String> findAll() {
+		Map<String, String> result = new HashMap<>();
+		List<CategoryEntity> entities = categoryRepository.findAll();
+		for(CategoryEntity items : entities) {
+			result.put(items.getCode(), items.getName());
+		}
+		return result;
+	}
+
+	@Override
+	public List<CategoryDTO> findAll(Pageable pageable) {
+		List<CategoryDTO> models = new ArrayList<>(); 
+		List<CategoryEntity> entities = categoryRepository.findAll(pageable).getContent();
+		for(CategoryEntity items : entities) {
+			CategoryDTO categoryDTO = categoryConverter.toDto(items);
+			models.add(categoryDTO);
+		}
+		return models;
+	}
+
+	@Override
+	public int getTotalItem() {	
+		return (int) categoryRepository.count();
+	}
+
+	@Override
+	public CategoryDTO findById(long id) {
+		CategoryEntity entity = categoryRepository.findOne(id);
+		return categoryConverter.toDto(entity);
+	}
+
+	@Override
+	@Transactional
+	public CategoryDTO insert(CategoryDTO categoryDto) {
+		CategoryEntity categoryEntity = categoryConverter.toEntity(categoryDto);
+		return categoryConverter.toDto(categoryRepository.save(categoryEntity));
+	}
+
+	@Override
+	@Transactional
+	public CategoryDTO update(CategoryDTO update) {
+		CategoryEntity oldCategory = categoryRepository.findOne(update.getId());
+		CategoryEntity categoryEntity = categoryConverter.toEntity(oldCategory, update);
+		return categoryConverter.toDto(categoryRepository.save(categoryEntity));
+	}
+	
+	@Override
+	@Transactional
+	public void delete(long[] ids) {
+		for(long id : ids) {
+			List<NewEntity> findByCategory = (List<NewEntity>) newRepository.findByCategory(id);
+			List<NewEntity> newEntity = findByCategory;
+			for(NewEntity item : newEntity) {
+				newRepository.delete(item.getId());
+			}
+			categoryRepository.delete(id);
+		}
+		
+	}
+
+}

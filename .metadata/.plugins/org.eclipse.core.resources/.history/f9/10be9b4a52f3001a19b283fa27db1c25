@@ -1,0 +1,5 @@
+package springmvc.webnews.constant;
+
+public class SystemConstant {
+
+}

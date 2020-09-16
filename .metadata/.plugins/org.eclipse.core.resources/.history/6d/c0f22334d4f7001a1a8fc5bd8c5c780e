@@ -1,0 +1,163 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@include file="/common/taglib.jsp"%>
+<c:url var="userURL" value = "/quan-tri/nguoi-dung/danh-sach"/>
+<c:url var="editUserURL" value="/quan-tri/nguoi-dung/chinh-sua"/>
+<c:url var="userAPI" value="/api/user"/>
+<c:url var="trangchuURL" value="/trang-chu/dang-ky"/>
+<html>
+<head>
+    <title>Chỉnh sửa USER</title>
+    
+    	<title><dec:title default="Trang chủ" /></title>
+
+    
+</head>
+<body>
+<!-- header -->
+	<div id="navbar" class="navbar navbar-default          ace-save-state">
+    <div class="navbar-container ace-save-state" id="navbar-container">
+        <div class="navbar-header pull-left">
+            <a href="#" class="navbar-brand">
+                <small>
+                    <i class="fa fa-leaf"></i>
+                    Trang quản trị
+                </small>
+            </a>
+        </div>
+        <div class="navbar-buttons navbar-header pull-right collapse navbar-collapse" role="navigation">
+            <ul class="nav ace-nav">
+                <li class="light-blue dropdown-modal">
+                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+
+                    </a>
+                    <li class="light-blue dropdown-modal">
+                        <a href="<c:url value='/thoat'/>">
+                            <i class="ace-icon fa fa-power-off"></i>
+
+                        </a>
+                    </li>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /header -->
+
+	<div class="main-content">
+	<div class="main-content-inner">
+		<div class="breadcrumbs" id="breadcrumbs">
+			<script type="text/javascript">
+				try {
+					ace.settings.check('breadcrumbs', 'fixed')
+				} catch (e) {
+				}
+			</script>
+
+			<ul class="breadcrumb">
+				<li><i class="ace-icon fa fa-home home-icon"></i> <a href="<c:url value='/quan-tri/trang-chu'/>">Trang Chủ</a>
+				</li>
+
+				<li><a href="<c:url value='/quan-tri/nguoi-dung/danh-sach?page=1&limit=5'/>">USER</a></li>
+				<c:if test="${empty model.id}">
+					<li class="active">Thêm USER</li>
+				</c:if>
+				
+			</ul>
+			<!-- /.breadcrumb -->
+		</div>
+		<div class="page-content">
+			<div class="row">
+				<div class="col-xs-12">
+					<c:if test="${not empty message}">
+						<div class="alert alert-${alert}">
+  							${message}
+						</div>
+					</c:if>
+					<form:form class="form-horizontal" role="form" id="formSubmit" modelAttribute="model">
+						<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1">UserName</label>
+								<div class="col-sm-9">
+
+										<form:input path="userName" cssClass="col-xs-10 col-sm-5"/>
+
+								</div>
+						</div>
+						<div class="form-group">
+						  	<label for="password" class="col-sm-3 control-label no-padding-right">PassWord:</label>
+						  	<div class="col-sm-9">
+						  		<form:password path="password" cssClass="col-xs-10 col-sm-5" id="password"/>
+						  	</div>
+						</div>
+						<div class="form-group">
+						  	<label for="confirmPassword" class="col-sm-3 control-label no-padding-right">Confirm PassWord:</label>
+						  	<div class="col-sm-9">
+						  		<form:password path="confirmPassword" cssClass="col-xs-10 col-sm-5" id="confirmPassword"/>
+						  	</div>
+						</div>
+						<div class="form-group">
+						  	<label for="fullName" class="col-sm-3 control-label no-padding-right">FullName:</label>
+						  	<div class="col-sm-9">
+						  		<form:input path="fullName" cssClass="col-xs-10 col-sm-5" id="fullName"/>
+						  	</div>
+						</div>
+			
+						<form:hidden path="roleCode" id="roleCode" value="USER"/>
+						<form:hidden path="status" id="status" value="1"/>
+						<div class="clearfix form-actions">
+							<div class="col-md-offset-3 col-md-9">
+
+												<button class="btn btn-info" type="button" id="btnAddOrUpdateUser">
+													<i class="ace-icon fa fa-check bigger-110"></i>
+													Thêm USER
+												</button>
+
+
+											&nbsp; &nbsp; &nbsp;
+											<button class="btn" type="reset">
+												<i class="ace-icon fa fa-undo bigger-110"></i>
+												Hủy
+											</button>
+							</div>		
+						</div>
+					</form:form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$('#btnAddOrUpdateUser').click(function (e) {
+	    e.preventDefault(); //nếu ko có thì sẽ mặc định submit vào url đang đứng 
+	    var data = {};
+	    var formData = $('#formSubmit').serializeArray();
+	    $.each(formData, function (i, v) {
+            data[""+v.name+""] = v.value;
+        });
+	    var cfpass = $('#confirmPassword').val();
+	    var pass = $('#password').val();
+	    if(cfpass == pass){
+	    	addUser(data);
+	    } else {
+	    	window.location.href = "${trangchuURL}?message=error_system";
+	    }    
+	});
+	
+	function addUser(data){
+		$.ajax({
+            url: '${userAPI}',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: function (result) {
+            	window.location.href = "${trangchuURL}?message=insert_success";
+            },
+            error: function (error) {
+            	window.location.href = "${trangchuURL}?message=error_system";
+            }
+        });
+	}
+</script>
+</body>
+</html>

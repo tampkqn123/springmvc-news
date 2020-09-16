@@ -1,0 +1,5 @@
+package springmvc.webnews.controller.web;
+
+public class NewController {
+
+}

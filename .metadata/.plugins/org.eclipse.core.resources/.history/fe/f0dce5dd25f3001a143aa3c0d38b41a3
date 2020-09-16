@@ -1,0 +1,5 @@
+package springmvc.webnews.service.impl;
+
+public class NewService {
+
+}

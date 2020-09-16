@@ -1,0 +1,12 @@
+package springmvc.webnews.api;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class HomeAPI {
+	
+	public ResponseEntity<void> uploadFile(){
+		return ResponseEntity.noContent().build();
+	}
+}

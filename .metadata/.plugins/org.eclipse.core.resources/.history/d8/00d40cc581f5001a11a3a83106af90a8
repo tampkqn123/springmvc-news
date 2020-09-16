@@ -1,0 +1,58 @@
+package springmvc.webnews.service.impl;
+
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import springmvc.webnews.dto.UserDTO;
+import springmvc.webnews.service.IUserService;
+
+@Service
+public class UserService implements IUserService{
+
+	@Override
+	public List<UserDTO> findAll(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getTotalItem() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public UserDTO findById(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PasswordEncoder passwordEncoder() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserDTO insert(UserDTO userDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserDTO update(UserDTO updateUser) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void delete(long[] ids) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+}	

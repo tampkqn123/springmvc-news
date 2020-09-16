@@ -1,0 +1,24 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+   <%@include file="/common/taglib.jsp"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Register</title>
+</head>
+<body>
+<h1> Register</h1>
+<c:if test='${alert=="success" }'>Success</c:if>
+<c:if test='${alert=="fail" }'>Fail</c:if>
+<form:form action="${pageContext.request.contextPath}/register" method="post" modelAttribute="newUser">
+Username: <form:input path="userName"/><br>
+Password: <form:input path="password"/><br>
+Fullname: <form:input path="fullName"/><br>
+<form:hidden path="status" id="status" value="1"/>
+<form:hidden path="roleCode" id="roleCode" value="USER"/>
+
+<form:button>Save</form:button>
+</form:form>
+</body>
+</html>

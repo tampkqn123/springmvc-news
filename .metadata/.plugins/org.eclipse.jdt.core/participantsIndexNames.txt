@@ -1,0 +1,27 @@
+INDEX VERSION 1.131
+C:\Users\TechCare\Desktop\web-news-springmvc\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1516175435.index
+\web-news-springmvc\src\main\java
+C:\Users\TechCare\Desktop\web-news-springmvc\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2628724054.index
+\web-news-springmvc\src\main\java
+C:\Users\TechCare\Desktop\web-news-springmvc\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2963253256.index
+\web-news-springmvc\src\main\java
+C:\Users\TechCare\Desktop\web-news-springmvc\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2475227168.index
+\web-news-springmvc\src\main\java
+C:\Users\TechCare\Desktop\web-news-springmvc\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2329712734.index
+\web-news-springmvc\src\main\java
+C:\Users\TechCare\Desktop\web-news-springmvc\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2363967234.index
+\web-news-springmvc\src\main\java
+C:\Users\TechCare\Desktop\web-news-springmvc\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\891853502.index
+\web-news-springmvc\src\main\java
+C:\Users\TechCare\Desktop\web-news-springmvc\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3288533252.index
+\web-news-springmvc\src\main\java
+C:\Users\TechCare\Desktop\web-news-springmvc\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1288757315.index
+\web-news-springmvc\src\main\java
+C:\Users\TechCare\Desktop\web-news-springmvc\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2029157978.index
+\web-news-springmvc\src\main\java
+C:\Users\TechCare\Desktop\web-news-springmvc\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\326688121.index
+\web-news-springmvc\src\main\java
+C:\Users\TechCare\Desktop\web-news-springmvc\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1525987388.index
+\web-news-springmvc\src\main\java
+C:\Users\TechCare\Desktop\web-news-springmvc\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3935036464.index
+\web-news-springmvc\src\main\java

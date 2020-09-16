@@ -1,0 +1,87 @@
+package springmvc.webnews.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import springmvc.webnews.converter.NewConverter;
+import springmvc.webnews.dto.NewDTO;
+import springmvc.webnews.entity.CategoryEntity;
+import springmvc.webnews.entity.NewEntity;
+import springmvc.webnews.repository.CategoryRepository;
+import springmvc.webnews.repository.NewRepository;
+import springmvc.webnews.service.INewService;
+
+@Service
+public class NewService implements INewService{
+	
+	@Autowired
+	private NewRepository newRepository;
+	
+	@Autowired
+	private NewConverter newConverter;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
+
+	@Override
+	public List<NewDTO> findAll(Pageable pageble) {
+		List<NewDTO> models = new ArrayList<>();
+		List<NewEntity> entities = newRepository.findAll(pageble).getContent();
+		for(NewEntity items : entities) {
+			NewDTO newDTO = newConverter.toDto(items);
+			models.add(newDTO);
+		}
+		return models;
+	}
+
+	@Override
+	public int getTotalItem() {
+		return (int) newRepository.count();
+	}
+
+	@Override
+	public NewDTO findById(long id) {
+		NewEntity entity = newRepository.findOne(id);
+		return newConverter.toDto(entity);
+	}
+
+	@Override
+	@Transactional
+	public NewDTO insert(NewDTO dto) {
+		CategoryEntity category = categoryRepository.findOneByCode(dto.getCategoryCode());
+		NewEntity newEntity = newConverter.toEntity(dto);
+		newEntity.setCategory(category);
+		newEntity = newRepository.save(newEntity);
+		return newConverter.toDto(newEntity);
+	}
+
+	@Override
+	@Transactional
+	public NewDTO update(NewDTO updateNew) {
+		NewEntity oldNew = newRepository.findOne(updateNew.getId());
+		CategoryEntity category = categoryRepository.findOneByCode(updateNew.getCategoryCode());
+		oldNew.setCategory(category);
+		NewEntity newEntity = newConverter.toEntity(oldNew, updateNew);
+		newEntity = newRepository.save(newEntity);
+		return newConverter.toDto(newEntity);
+	}
+
+	@Override
+	@Transactional
+	public void delete(long[] ids) {
+		for(long item : ids) {
+			newRepository.delete(item);
+		}
+	}
+
+	@Override
+	public List<NewEntity> findAll() {
+		return newRepository.findAll();
+	}
+}

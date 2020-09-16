@@ -1,0 +1,13 @@
+package springmvc.webnews.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import springmvc.webnews.entity.NewEntity;
+import springmvc.webnews.entity.UserEntity;
+
+public interface NewRepository extends JpaRepository<NewEntity, Long>{
+		List<NewEntity> findByCategory(Long id);
+		UserEntity findOneByUserName(String userName);
+}

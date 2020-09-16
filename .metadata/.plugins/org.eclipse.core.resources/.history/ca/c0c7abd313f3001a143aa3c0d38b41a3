@@ -1,0 +1,29 @@
+package springmvc.webnews.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name ="user")
+public class UserEntity extends BaseEntity{
+	
+	@Column(name = "username")
+	private String userName;
+
+	@Column(name = "password")
+	private String password;
+
+	@Column(name = "fullname")
+	private String fullName;
+
+	@Column
+	private Integer status;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "role_id")
+	private RoleEntity roles;
+}

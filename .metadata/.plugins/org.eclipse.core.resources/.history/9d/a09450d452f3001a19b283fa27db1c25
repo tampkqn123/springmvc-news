@@ -1,0 +1,5 @@
+package springmvc.webnews.util;
+
+public class SecurityUtils {
+
+}
